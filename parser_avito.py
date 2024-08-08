@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup 
+import pandas
 
 
 driver = webdriver.Chrome()
@@ -13,17 +14,27 @@ wait = WebDriverWait(driver, 10)
 time.sleep(1)
 driver.refresh()
 page = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'index-content-_KxNP')))
-html_string = page.get_attribute("outerHTML")
+htmlString = page.get_attribute("outerHTML")
 
-soup = BeautifulSoup(html_string, 'html.parser')
+soup = BeautifulSoup(htmlString, 'html.parser')
 
-elements = soup.find_all('strong', class_='styles-module-root-bLKnd')
-for element in elements:
-    print(element.text.strip())
-    print("🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢🟢")
+elementsBodyBlock = soup.find_all('div', class_='iva-item-body-KLUuy')
 
 
-print(elements)
+
+
+for Block in (elementsBodyBlock):
+    if len(Block.find_all(attrs={'data-marker': 'item-address'})) > 0:
+        elementPrise = Block.find('strong', class_= 'styles-module-root-bLKnd')
+        elementInfoRoom = Block.find('h3', class_= 'styles-module-root-GKtmM styles-module-root-YczkZ styles-module-size_l-iNNq9 styles-module-size_l_compensated-KFJud styles-module-size_l-YMQUP styles-module-ellipsis-a2Uq1 styles-module-weight_bold-jDthB stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-header-l-iFKq3')
+        elementAdress = Block.find('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s-_z7mI stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e')
+        elementMoreInfo = Block.find('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s_compensated-QmHFs styles-module-size_s-_z7mI styles-module-ellipsis-a2Uq1 stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e styles-module-noAccent-LowZ8 styles-module-root_bottom-G4JNz styles-module-margin-bottom_6-_aVZm')
+        print(elementPrise.text.strip(), elementInfoRoom.text.strip(), elementAdress.text.strip(), '\n', elementMoreInfo.text.strip(), '\n')
+    else:
+        pass
+
+
+
 
 
 
