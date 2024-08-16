@@ -47,8 +47,10 @@ def square(InfoRoom):
     return square
 
 def address_(address_arr):
-    if len(address_arr) > 1:
+    if len(address_arr) == 3:
         address = address_arr[1].text.strip()
+    elif len(address_arr) == 2:
+        address = address_arr[0].text.strip()
     else:
         address = address_arr[0].text.strip()
 
@@ -79,12 +81,12 @@ shapka = {'prise': [], 'rooms': [], 'square': [], 'floor': [], 'totalFloors': []
 df = pd.DataFrame(shapka)
 
 # подключение selenium  к сайту
-driver = webdriver.Chrome()
-driver.get("https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA=1")
+driver = webdriver.Edge()
+driver.get("https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p=100")
 wait = WebDriverWait(driver, 10)
 driver.refresh()
 
-for i in range(2):
+for i in range(100):
     time.sleep(1)
 
     # получение html кода страницы
@@ -105,7 +107,7 @@ for i in range(2):
             elementInfoRoom = Block.find('h3', class_= 'styles-module-root-GKtmM styles-module-root-YczkZ styles-module-size_l-iNNq9 styles-module-size_l_compensated-KFJud styles-module-size_l-YMQUP styles-module-ellipsis-a2Uq1 styles-module-weight_bold-jDthB stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-header-l-iFKq3')
             elementAdress = Block.find_all('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s-_z7mI stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e')
             elementMoreInfo = Block.find('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s_compensated-QmHFs styles-module-size_s-_z7mI styles-module-ellipsis-a2Uq1 stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e styles-module-noAccent-LowZ8 styles-module-root_bottom-G4JNz styles-module-margin-bottom_6-_aVZm')
-            if elementPrice != None and elementInfoRoom != None and elementAdress != None:
+            if elementPrice != None and elementInfoRoom != None and elementAdress != [] and elementAdress != None:
                 # print('_________________________', '\n'*2,
                 #     (elementPrice.text.strip()), '\n',
                 #     (elementInfoRoom.text.strip()), '\n',
@@ -130,14 +132,16 @@ for i in range(2):
                 print('🔴 NONE element')
         else:
             pass
-
     
-    driver.get(f"https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p={i+2}")
+    df.to_csv('database_rooms\database_rooms\database2.csv', index=False)
+
+    print('➡ page Number:' + str(i+2))
+    driver.get(f"https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p={i+102}")
 
 
 
 print(df.to_string())
-df.to_csv('database_rooms\database_rooms\database.csv')
+df.to_csv('database_rooms\database_rooms\database2.csv', index=False)
 
 
 
