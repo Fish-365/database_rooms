@@ -135,7 +135,7 @@ for i in range(100):
     
     df.to_csv('database_rooms\database_rooms\database2.csv', index=False)
 
-    print('➡ page Number:' + str(i+2))
+    print('➡ page Number:' + str(i+102))
     driver.get(f"https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p={i+102}")
 
 
