@@ -82,7 +82,7 @@ df = pd.DataFrame(shapka)
 
 # подключение selenium  к сайту
 driver = webdriver.Edge()
-driver.get("https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p=100")
+driver.get("https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA")
 wait = WebDriverWait(driver, 10)
 driver.refresh()
 
@@ -133,7 +133,7 @@ for i in range(100):
         else:
             pass
     
-    df.to_csv('database_rooms\database_rooms\database2.csv', index=False)
+    df.to_csv('database_rooms\database_rooms\database.csv', index=False)
 
     print('➡ page Number:' + str(i+102))
     driver.get(f"https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p={i+102}")
@@ -141,7 +141,7 @@ for i in range(100):
 
 
 print(df.to_string())
-df.to_csv('database_rooms\database_rooms\database2.csv', index=False)
+df.to_csv('database_rooms\database_rooms\database.csv', index=False)
 
 
 
