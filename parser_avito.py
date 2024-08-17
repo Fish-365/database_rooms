@@ -68,7 +68,7 @@ def infoRoom_(InfoRoom, priceStr, address):
             InfoRoom.pop(0)
 
     if len(InfoRoom) == 4:
-        rooms = InfoRoom[0][:-3]
+        rooms = re.sub(r'\D', '', InfoRoom[0])
         InfoRoom.pop(0)
         return price(priceStr), rooms, square(InfoRoom), infoFloor(InfoRoom)[0], infoFloor(InfoRoom)[1], flat(InfoRoom) ,address_(address)
     else:
