@@ -49,8 +49,6 @@ def square(InfoRoom):
 def address_(address_arr):
     if len(address_arr) == 3:
         address = address_arr[1].text.strip()
-    elif len(address_arr) == 2:
-        address = address_arr[0].text.strip()
     else:
         address = address_arr[0].text.strip()
 
@@ -70,7 +68,7 @@ def infoRoom_(InfoRoom, priceStr, address):
     if len(InfoRoom) == 4:
         rooms = re.sub(r'\D', '', InfoRoom[0])
         InfoRoom.pop(0)
-        return price(priceStr), rooms, square(InfoRoom), infoFloor(InfoRoom)[0], infoFloor(InfoRoom)[1], flat(InfoRoom) ,address_(address)
+        return price(priceStr), rooms, square(InfoRoom), int(infoFloor(InfoRoom)[0]), int(infoFloor(InfoRoom)[1]), flat(InfoRoom) ,address_(address)
     else:
         rooms = 1
         return price(priceStr), rooms, square(InfoRoom), infoFloor(InfoRoom)[0], infoFloor(InfoRoom)[1], flat(InfoRoom) ,address_(address)
@@ -81,7 +79,7 @@ shapka = {'prise': [], 'rooms': [], 'square': [], 'floor': [], 'totalFloors': []
 df = pd.DataFrame(shapka)
 
 # подключение selenium  к сайту
-driver = webdriver.Edge()
+driver = webdriver.Chrome()
 driver.get("https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA")
 wait = WebDriverWait(driver, 10)
 driver.refresh()
@@ -135,8 +133,8 @@ for i in range(100):
     
     df.to_csv('database_rooms\database_rooms\database.csv', index=False)
 
-    print('➡ page Number:' + str(i+102))
-    driver.get(f"https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p={i+102}")
+    print('➡ page Number:' + str(i+2))
+    driver.get(f"https://www.avito.ru/moskva/kvartiry/prodam-ASgBAgICAUSSA8YQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYysVLKTczMU7KuBQQAAP__w5qblCAAAAA&p={i+2}")
 
 
 
