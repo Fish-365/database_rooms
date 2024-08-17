@@ -47,11 +47,7 @@ def square(InfoRoom):
     return square
 
 def address_(address_arr):
-    if len(address_arr) == 3:
-        address = address_arr[1].text.strip()
-    else:
-        address = address_arr[0].text.strip()
-
+    address = address_arr.text.strip()
     return address
 
 
@@ -103,9 +99,9 @@ for i in range(100):
         if len(Block.find_all(attrs={'data-marker': 'item-address'})) > 0:
             elementPrice = Block.find('strong', class_= 'styles-module-root-bLKnd')
             elementInfoRoom = Block.find('h3', class_= 'styles-module-root-GKtmM styles-module-root-YczkZ styles-module-size_l-iNNq9 styles-module-size_l_compensated-KFJud styles-module-size_l-YMQUP styles-module-ellipsis-a2Uq1 styles-module-weight_bold-jDthB stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-header-l-iFKq3')
-            elementAdress = Block.find_all('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s-_z7mI stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e')
+            elementAdress = Block.find('div', class_="geo-root-zPwRk").find('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s-_z7mI stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e')
             elementMoreInfo = Block.find('p', class_= 'styles-module-root-YczkZ styles-module-size_s-xb_uK styles-module-size_s_compensated-QmHFs styles-module-size_s-_z7mI styles-module-ellipsis-a2Uq1 stylesMarningNormal-module-root-S7NIr stylesMarningNormal-module-paragraph-s-Yhr2e styles-module-noAccent-LowZ8 styles-module-root_bottom-G4JNz styles-module-margin-bottom_6-_aVZm')
-            if elementPrice != None and elementInfoRoom != None and elementAdress != [] and elementAdress != None:
+            if elementPrice != None and elementInfoRoom != None and elementAdress != [] and elementAdress != None and len((elementAdress.text.strip()).split(' ')) >= 2:
                 # print('_________________________', '\n'*2,
                 #     (elementPrice.text.strip()), '\n',
                 #     (elementInfoRoom.text.strip()), '\n',
