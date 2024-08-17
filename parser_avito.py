@@ -71,7 +71,7 @@ def infoRoom_(InfoRoom, priceStr, address):
 
 
 
-shapka = {'prise': [], 'rooms': [], 'square': [], 'floor': [], 'totalFloors': [], 'flat/studio': [], 'address': [], 'coordinate': [], "distanceFromTheCenter": [], 'metro': [], 'cafe': [], 'park': [], 'beaches': [], 'hospital': [], 'police': [], 'shop': [], 'beautySalone': [], 'mall': [], 'museum': [], 'pharmacy': [], 'sportCenter': [], 'postOffice': [], 'hotel': []}
+shapka = {'price': [], 'rooms': [], 'square': [], 'floor': [], 'totalFloors': [], 'flat/studio': [], 'address': [], 'coordinate': [], "distanceFromTheCenter": [], 'metro': [], 'cafe': [], 'park': [], 'beaches': [], 'hospital': [], 'police': [], 'shop': [], 'beautySalone': [], 'mall': [], 'museum': [], 'pharmacy': [], 'sportCenter': [], 'postOffice': [], 'hotel': []}
 df = pd.DataFrame(shapka)
 
 # подключение selenium  к сайту
