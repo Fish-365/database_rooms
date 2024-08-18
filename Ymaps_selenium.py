@@ -55,7 +55,7 @@ time.sleep(10)
 
 for i in range(len(address_arr)):
     coordinate = get_coordinate(address_arr[i])
-    df.loc[i, 'addres'] = coordinate
+    df.loc[i, 'coordinate '] = coordinate
     print(df['address'][i], coordinate, str(i))
     time.sleep(0.5)
 
