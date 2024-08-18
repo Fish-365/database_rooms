@@ -5,7 +5,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup 
-
+import pandas as pd
+from fake_useragent import UserAgent
 
 driver = webdriver.Chrome()
 driver.get("https://Yandex.ru/maps")
@@ -14,10 +15,13 @@ wait = WebDriverWait(driver, 10)
 address = "пр-д Шмитовский, вл. 40"
 
 def convert_coordinate(coordinate):
-    coordinate_arr = (coordinate.text).split(', ')
-    width = coordinate_arr[0]
-    longitude = coordinate_arr[1]
-    convert_coordinate = str(longitude) + ',' + str(width)
+    if coordinate != None:
+        coordinate_arr = (coordinate.text.strip()).split(',')
+        width = coordinate_arr[0]
+        longitude = coordinate_arr[1]
+        convert_coordinate = str(longitude) + ',' + str(width)
+    else:
+        convert_coordinate = ''
     return convert_coordinate
 
 def get_coordinate(address):
@@ -32,12 +36,36 @@ def get_coordinate(address):
     input_element.clear()
     input_element.send_keys(address + Keys.RETURN)
     time.sleep(2) 
-    coordinate = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'toponym-card-title-view__coords-badge')))  
+    page = wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'sidebar-view__panel')))
+    htmlString = page.get_attribute("outerHTML")
+
+    soup = BeautifulSoup(htmlString, 'html.parser')
+    coordinate = soup.find('div', class_='toponym-card-title-view__coords-badge')
+
     input_element.clear()
     return convert_coordinate(coordinate)
 
 
+ua = UserAgent()
 
-print('convert:', get_coordinate(address=address))
-print('convert:', get_coordinate(address='Ленинградское ш., стр. 7.3'))
-time.sleep(1000)
+df = pd.read_csv('database_rooms\database_rooms\database.csv')
+address_arr = df['address']
+
+time.sleep(10)
+
+for i in range(len(address_arr)):
+    coordinate = get_coordinate(address_arr[i])
+    df.loc[i, 'addres'] = coordinate
+    print(df['address'][i], coordinate, str(i))
+    time.sleep(0.5)
+
+    if (i % 10) == 0:
+        new_user_agent = ua.random
+        driver.execute_script("navigator.userAgent = arguments[0]", new_user_agent)
+
+
+df.to_csv('database.csv', index=False)
+print(df)
+# print('convert:', get_coordinate(address=address))
+# print('convert:', get_coordinate(address='Ленинградское ш., стр. 7.3'))
+# time.sleep(1000)
